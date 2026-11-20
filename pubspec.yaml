@@ -1,0 +1,29 @@
+name: velvet_motion
+description: >-
+  Premium spring-physics motion for Flutter. Interruptible springs, gesture
+  velocity, and Apple-like defaults in one import—no animation files.
+version: 0.1.0
+homepage: https://github.com/AhsinMehmood/velvet_motion
+repository: https://github.com/AhsinMehmood/velvet_motion
+issue_tracker: https://github.com/AhsinMehmood/velvet_motion/issues
+topics:
+  - animation
+  - physics
+  - spring
+  - motion
+  - ui
+
+environment:
+  sdk: ^3.8.0
+  flutter: ">=3.32.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
