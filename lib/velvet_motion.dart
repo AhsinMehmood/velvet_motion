@@ -7,4 +7,5 @@
 /// ```
 library;
 
-// Public API exports are added as the package grows.
+export 'src/core/motion_value.dart';
+export 'src/core/spring.dart';
