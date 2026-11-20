@@ -177,6 +177,11 @@ class _GalleryHome extends StatelessWidget {
             subtitle: 'Idle → loading → success',
             onTap: () => _open(context, _MorphDemoPage(spring: spring)),
           ),
+          _DemoTile(
+            title: 'Bottom sheet',
+            subtitle: 'Snaps, fling, rubber-band',
+            onTap: () => _open(context, _SheetDemoPage(spring: spring)),
+          ),
         ],
       ),
     );
@@ -472,6 +477,56 @@ class _MorphDemoPageState extends State<_MorphDemoPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _SheetDemoPage extends StatefulWidget {
+  const _SheetDemoPage({required this.spring});
+
+  final Spring spring;
+
+  @override
+  State<_SheetDemoPage> createState() => _SheetDemoPageState();
+}
+
+class _SheetDemoPageState extends State<_SheetDemoPage> {
+  final VelvetSheetController _sheet = VelvetSheetController(
+    initialExtent: 0.55,
+  );
+
+  @override
+  void dispose() {
+    _sheet.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Bottom sheet')),
+      body: VelvetSheet(
+        controller: _sheet,
+        spring: widget.spring,
+        snaps: const <double>[0.22, 0.55, 0.92],
+        scaleBackground: true,
+        background: ColoredBox(
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          child: const Center(child: Text('Map / page behind the sheet')),
+        ),
+        builder: (BuildContext context, ScrollController scroll) {
+          return ListView.builder(
+            controller: scroll,
+            itemCount: 20,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text('Stop ${index + 1}'),
+                subtitle: const Text('Drag the sheet or fling to snap'),
+              );
+            },
+          );
+        },
       ),
     );
   }
