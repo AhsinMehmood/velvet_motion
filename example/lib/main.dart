@@ -192,6 +192,16 @@ class _GalleryHome extends StatelessWidget {
             subtitle: 'Branded spring indicator',
             onTap: () => _open(context, _RefreshDemoPage(spring: spring)),
           ),
+          _DemoTile(
+            title: 'Hero morph',
+            subtitle: 'Shared-element spring morph',
+            onTap: () => _open(context, const _MorphHeroDemoPage()),
+          ),
+          _DemoTile(
+            title: 'Swipe deck',
+            subtitle: 'Parallax cards with fling',
+            onTap: () => _open(context, _SwipeDemoPage(spring: spring)),
+          ),
         ],
       ),
     );
@@ -629,6 +639,139 @@ class _RefreshDemoPageState extends State<_RefreshDemoPage> {
             return ListTile(title: Text('Row ${index + 1}'));
           },
         ),
+      ),
+    );
+  }
+}
+
+class _MorphHeroDemoPage extends StatelessWidget {
+  const _MorphHeroDemoPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Hero morph')),
+      body: GridView.count(
+        crossAxisCount: 2,
+        padding: const EdgeInsets.all(16),
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        children: <Widget>[
+          for (int i = 0; i < 4; i++)
+            MorphSource(
+              tag: 'dish-$i',
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MorphRoute<void>(
+                      builder: (_) => _MorphDetailPage(index: i),
+                    ),
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: ColoredBox(
+                    color: Color.lerp(
+                      const Color(0xFF222222),
+                      const Color(0xFF888888),
+                      i / 4,
+                    )!,
+                    child: Center(
+                      child: Text(
+                        'Card $i',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MorphDetailPage extends StatelessWidget {
+  const _MorphDetailPage({required this.index});
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Dish $index')),
+      body: ListView(
+        children: <Widget>[
+          MorphTarget(
+            tag: 'dish-$index',
+            dismissOnDragDown: true,
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: ColoredBox(
+                color: Color.lerp(
+                  const Color(0xFF222222),
+                  const Color(0xFF888888),
+                  index / 4,
+                )!,
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(20),
+            child: Text(
+              'Drag down to dismiss. Shared morph uses Hero + spring curve.',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SwipeDemoPage extends StatefulWidget {
+  const _SwipeDemoPage({required this.spring});
+
+  final Spring spring;
+
+  @override
+  State<_SwipeDemoPage> createState() => _SwipeDemoPageState();
+}
+
+class _SwipeDemoPageState extends State<_SwipeDemoPage> {
+  final List<String> _items = List<String>.generate(
+    6,
+    (int i) => 'Offer ${i + 1}',
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Swipe deck')),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: _items.isEmpty
+            ? const Center(child: Text('Deck empty'))
+            : SwipeDeck<String>(
+                items: _items,
+                spring: widget.spring,
+                onSwipe: (String item, SwipeDirection dir) {
+                  setState(() => _items.remove(item));
+                },
+                builder: (BuildContext context, String item, double drag) {
+                  return Material(
+                    elevation: 6,
+                    borderRadius: BorderRadius.circular(20),
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: Center(
+                      child: Text(
+                        item,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ),
+                  );
+                },
+              ),
       ),
     );
   }

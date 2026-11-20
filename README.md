@@ -20,7 +20,7 @@ Hand-crafted, physics-based motion for Flutter apps. Springs, gestures and premi
 
 ```yaml
 dependencies:
-  velvet_motion: ^0.1.0
+  velvet_motion: ^0.5.0
 ```
 
 ```dart
@@ -115,6 +115,59 @@ MorphButton(
 );
 ```
 
+### Gesture bottom sheet
+
+```dart
+VelvetSheet(
+  snaps: const [0.2, 0.55, 0.92],
+  rubberBand: 0.55,
+  scaleBackground: true,
+  builder: (context, scroll) => ListView(controller: scroll, children: tiles),
+);
+```
+
+### Elastic tab bar
+
+```dart
+ElasticTabBar(
+  index: tab,
+  onChanged: (i) => setState(() => tab = i),
+  items: const [
+    TabItem(icon: Icons.home_rounded, label: 'Home'),
+    TabItem(icon: Icons.receipt_long_rounded, label: 'Orders'),
+    TabItem(icon: Icons.person_rounded, label: 'Profile'),
+  ],
+);
+```
+
+### Pull to refresh
+
+```dart
+SpringRefresh(
+  onRefresh: fetchOrders,
+  indicator: (context, progress, state) => LogoStroke(progress: progress),
+  child: ListView(children: tiles),
+);
+```
+
+### Hero morph
+
+```dart
+MorphSource(tag: 'dish-1', child: DishCard(dish));
+// push MorphRoute →
+MorphTarget(tag: 'dish-1', dismissOnDragDown: true, child: DishDetails(dish));
+```
+
+### Swipe deck
+
+```dart
+SwipeDeck<Offer>(
+  items: offers,
+  onSwipe: (offer, dir) => dir == SwipeDirection.right ? save(offer) : null,
+  builder: (context, offer, drag) => OfferCard(offer, drag: drag),
+);
+```
+
 ## Theming and reduce motion
 
 ```dart
@@ -134,15 +187,9 @@ When `MediaQuery.disableAnimations` is true and the theme respects it, widgets j
 
 Each item will be tracked as a GitHub issue. See [open issues](https://github.com/AhsinMehmood/velvet_motion/issues).
 
-**v0.5**
+**v0.5 (shipped)** — bottom sheet, elastic tabs, pull-to-refresh, hero morph, swipe deck.
 
-- Gesture-driven bottom sheet
-- Elastic tab bar
-- Custom pull-to-refresh
-- Shared-element hero morph
-- Parallax swipe deck
-
-Then physics helpers, more widgets, and a stable v1.0 API.
+**Next** — physics helpers, more widgets, and a stable v1.0 API.
 
 ## Contributing
 

@@ -1,3 +1,12 @@
+## 0.5.0
+
+* `VelvetSheet` — snap points, rubber-banding, velocity fling, backdrop scale
+* `ElasticTabBar` — liquid selected pill with icon pop
+* `SpringRefresh` — branded pull-to-refresh with progress builder
+* `MorphSource` / `MorphTarget` / `MorphRoute` — shared-element morph
+* `SwipeDeck` — parallax swipe cards with spring settle
+* Gesture helpers: `rubberBand`, `nearestSnap`
+
 ## 0.1.1
 
 * Migrate Material and Cupertino imports to `material_ui` and `cupertino_ui` for Flutter 3.50+ static analysis
