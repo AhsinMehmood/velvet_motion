@@ -20,7 +20,7 @@ Hand-crafted, physics-based motion for Flutter apps. Springs, gestures and premi
 
 ```yaml
 dependencies:
-  velvet_motion: ^0.5.0
+  velvet_motion: ^1.0.0
 ```
 
 ```dart
@@ -168,6 +168,54 @@ SwipeDeck<Offer>(
 );
 ```
 
+### Skeleton shimmer
+
+```dart
+SkeletonShimmer(
+  loading: isLoading,
+  child: OrderTile(order),
+);
+```
+
+### Expandable card
+
+```dart
+ExpandableCard(
+  collapsed: OrderSummary(order),
+  expanded: OrderDetails(order),
+);
+```
+
+### Morph icon
+
+```dart
+MorphIcon(
+  showAlternate: liked,
+  icon: const Icon(Icons.favorite_border),
+  alternateIcon: const Icon(Icons.favorite),
+);
+```
+
+### Island toast
+
+```dart
+IslandToast.show(context, message: 'Order placed');
+```
+
+### Spring text
+
+```dart
+SpringText(text: 'Delivered', style: Theme.of(context).textTheme.displaySmall);
+```
+
+### Velocity + decay fling
+
+```dart
+final tracker = VelocityTracker();
+tracker.add(time: elapsed, position: dx);
+motion.fling(velocity: tracker.velocity);
+```
+
 ## Theming and reduce motion
 
 ```dart
@@ -187,9 +235,9 @@ When `MediaQuery.disableAnimations` is true and the theme respects it, widgets j
 
 Each item will be tracked as a GitHub issue. See [open issues](https://github.com/AhsinMehmood/velvet_motion/issues).
 
-**v0.5 (shipped)** — bottom sheet, elastic tabs, pull-to-refresh, hero morph, swipe deck.
+**v1.0 (stable)** — API freeze, physics helpers, skeleton, expandable card, morph icon, island toast, spring text.
 
-**Next** — physics helpers, more widgets, and a stable v1.0 API.
+**Next (1.x)** — animated forms, scroll-linked parallax, shared-axis transitions, choreography.
 
 ## Contributing
 

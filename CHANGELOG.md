@@ -1,3 +1,15 @@
+## 1.0.0
+
+Stable API freeze for the 1.x line.
+
+* Physics: `VelocityTracker`, `DecayFling`, `HapticThreshold`, `clampWithRubber`
+* `MotionValue.fling` / `MotionValue.animateWith` for friction and custom simulations
+* `SkeletonShimmer` — shimmer placeholder that springs into content
+* `ExpandableCard` — in-place expand/collapse
+* `MorphIcon` — spring cross-fade between icon pairs
+* `IslandToast` — Dynamic Island-style notification pill (`show` helper)
+* `SpringText` — staggered per-character reveal
+
 ## 0.5.0
 
 * `VelvetSheet` — snap points, rubber-banding, velocity fling, backdrop scale

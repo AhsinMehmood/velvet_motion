@@ -202,6 +202,31 @@ class _GalleryHome extends StatelessWidget {
             subtitle: 'Parallax cards with fling',
             onTap: () => _open(context, _SwipeDemoPage(spring: spring)),
           ),
+          _DemoTile(
+            title: 'Skeleton shimmer',
+            subtitle: 'Placeholder → content spring',
+            onTap: () => _open(context, _SkeletonDemoPage(spring: spring)),
+          ),
+          _DemoTile(
+            title: 'Expandable card',
+            subtitle: 'Grow in place for details',
+            onTap: () => _open(context, _ExpandDemoPage(spring: spring)),
+          ),
+          _DemoTile(
+            title: 'Morph icon',
+            subtitle: 'Heart fill with spring rotate',
+            onTap: () => _open(context, _MorphIconDemoPage(spring: spring)),
+          ),
+          _DemoTile(
+            title: 'Island toast',
+            subtitle: 'Dynamic Island-style pill',
+            onTap: () => _open(context, const _ToastDemoPage()),
+          ),
+          _DemoTile(
+            title: 'Spring text',
+            subtitle: 'Per-character reveal',
+            onTap: () => _open(context, _SpringTextDemoPage(spring: spring)),
+          ),
         ],
       ),
     );
@@ -772,6 +797,178 @@ class _SwipeDemoPageState extends State<_SwipeDemoPage> {
                   );
                 },
               ),
+      ),
+    );
+  }
+}
+
+class _SkeletonDemoPage extends StatefulWidget {
+  const _SkeletonDemoPage({required this.spring});
+
+  final Spring spring;
+
+  @override
+  State<_SkeletonDemoPage> createState() => _SkeletonDemoPageState();
+}
+
+class _SkeletonDemoPageState extends State<_SkeletonDemoPage> {
+  bool _loading = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Skeleton shimmer')),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: <Widget>[
+            SkeletonShimmer(
+              loading: _loading,
+              spring: widget.spring,
+              child: Material(
+                borderRadius: BorderRadius.circular(12),
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: const SizedBox(
+                  height: 72,
+                  width: double.infinity,
+                  child: Center(child: Text('Order #1842 ready')),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            FilledButton(
+              onPressed: () => setState(() => _loading = !_loading),
+              child: Text(_loading ? 'Reveal' : 'Reload'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ExpandDemoPage extends StatelessWidget {
+  const _ExpandDemoPage({required this.spring});
+
+  final Spring spring;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Expandable card')),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: ExpandableCard(
+          spring: spring,
+          color: Theme.of(context).colorScheme.surface,
+          collapsed: Text(
+            'Margherita · Rs 890',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          expanded: Text(
+            'San Marzano tomato, fresh mozzarella, basil. '
+            'Ready in ~18 minutes. Tap again to collapse.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MorphIconDemoPage extends StatefulWidget {
+  const _MorphIconDemoPage({required this.spring});
+
+  final Spring spring;
+
+  @override
+  State<_MorphIconDemoPage> createState() => _MorphIconDemoPageState();
+}
+
+class _MorphIconDemoPageState extends State<_MorphIconDemoPage> {
+  bool _liked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Morph icon')),
+      body: Center(
+        child: IconButton(
+          iconSize: 48,
+          onPressed: () => setState(() => _liked = !_liked),
+          icon: MorphIcon(
+            showAlternate: _liked,
+            spring: widget.spring,
+            size: 48,
+            color: _liked ? Colors.red : Theme.of(context).iconTheme.color,
+            icon: const Icon(Icons.favorite_border),
+            alternateIcon: const Icon(Icons.favorite),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ToastDemoPage extends StatelessWidget {
+  const _ToastDemoPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Island toast')),
+      body: Center(
+        child: FilledButton(
+          onPressed: () {
+            IslandToast.show(
+              context,
+              message: 'Order placed',
+              leading: const Icon(Icons.check_circle, color: Colors.white, size: 18),
+            );
+          },
+          child: const Text('Show toast'),
+        ),
+      ),
+    );
+  }
+}
+
+class _SpringTextDemoPage extends StatefulWidget {
+  const _SpringTextDemoPage({required this.spring});
+
+  final Spring spring;
+
+  @override
+  State<_SpringTextDemoPage> createState() => _SpringTextDemoPageState();
+}
+
+class _SpringTextDemoPageState extends State<_SpringTextDemoPage> {
+  int _nonce = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Spring text')),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SpringText(
+              key: ValueKey<int>(_nonce),
+              text: 'Delivered',
+              spring: widget.spring,
+              style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -1,
+                  ),
+            ),
+            const SizedBox(height: 24),
+            FilledButton(
+              onPressed: () => setState(() => _nonce++),
+              child: const Text('Replay'),
+            ),
+          ],
+        ),
       ),
     );
   }

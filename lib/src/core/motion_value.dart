@@ -38,7 +38,7 @@ class MotionValue extends ChangeNotifier implements ValueListenable<double> {
 
   double _value;
   double _velocity = 0;
-  SpringSimulation? _simulation;
+  Simulation? _simulation;
 
   /// Current velocity in units per second.
   double get velocity => _velocity;
@@ -80,6 +80,31 @@ class MotionValue extends ChangeNotifier implements ValueListenable<double> {
     return animateTo(to);
   }
 
+  /// Drives this value with an arbitrary [simulation] (spring, friction, …).
+  TickerFuture animateWith(Simulation simulation) {
+    _simulation = simulation;
+    return _restartTicker();
+  }
+
+  /// Glides with friction from the current value using [velocity].
+  ///
+  /// [drag] is passed to [FrictionSimulation] (higher stops sooner).
+  TickerFuture fling({
+    required double velocity,
+    double drag = 0.015,
+    Tolerance? tolerance,
+  }) {
+    _velocity = velocity;
+    return animateWith(
+      FrictionSimulation(
+        drag,
+        _value,
+        velocity,
+        tolerance: tolerance ?? this.tolerance,
+      ),
+    );
+  }
+
   /// Stops the ticker and clears velocity without changing [value].
   void stop() {
     _halt(canceled: true);
@@ -108,7 +133,7 @@ class MotionValue extends ChangeNotifier implements ValueListenable<double> {
   }
 
   void _onTick(Duration elapsed) {
-    final SpringSimulation? simulation = _simulation;
+    final Simulation? simulation = _simulation;
     if (simulation == null) {
       _halt(canceled: true);
       return;

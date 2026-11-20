@@ -97,6 +97,24 @@ void main() {
     expect(motion.velocity, 0);
     expect(motion.isAnimating, isFalse);
   });
+
+  testWidgets('fling glides with friction then settles', (
+    WidgetTester tester,
+  ) async {
+    late MotionValue motion;
+    await tester.pumpWidget(
+      _MotionHarness(onCreated: (MotionValue value) => motion = value),
+    );
+
+    motion.fling(velocity: 600);
+    expect(motion.isAnimating, isTrue);
+
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 3));
+    expect(motion.value, greaterThan(0));
+    expect(motion.isAnimating, isFalse);
+    expect(motion.velocity, 0);
+  });
 }
 
 class _MotionHarness extends StatefulWidget {
