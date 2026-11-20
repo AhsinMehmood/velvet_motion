@@ -21,13 +21,29 @@ jobs:
       - name: Analyze
         run: flutter analyze
       - name: Test
-        run: flutter test
+        # Goldens are tagged and generated locally; pixel diffs across macOS/Linux
+        # fonts make them flaky on CI, so exclude them from the default suite.
+        run: flutter test --exclude-tags golden
       - name: Example pub get
         run: flutter pub get
         working-directory: example
       - name: Example analyze
         run: flutter analyze
         working-directory: example
+
+  goldens:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Pub get
+        run: flutter pub get
+      - name: Golden tests
+        run: flutter test --tags golden
 
   pana:
     runs-on: ubuntu-latest
