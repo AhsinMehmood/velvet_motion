@@ -54,3 +54,10 @@ VELVET_MOTION_PLAN.md
 VELVET_MOTION_PLAN.pdf
 .ai/
 prompts/
+
+# Plans, prompts, and local notes (never commit)
+*.plan.md
+*_PLAN.md
+*_PLAN.pdf
+VELVET_*.md
+VELVET_*.pdf
