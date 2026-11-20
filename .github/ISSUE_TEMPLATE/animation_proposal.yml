@@ -1,0 +1,32 @@
+name: Animation proposal
+description: Propose a new ready-made animation for the package
+title: "[Animation]: "
+labels: ["animation"]
+body:
+  - type: textarea
+    id: look
+    attributes:
+      label: What it looks like
+      description: Describe the motion in plain language
+    validations:
+      required: true
+  - type: textarea
+    id: usage
+    attributes:
+      label: Where apps use it
+      description: Screens or flows that need this motion
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: Reference video link
+      description: Optional URL to a reference clip
+  - type: textarea
+    id: api
+    attributes:
+      label: Proposed API
+      description: Sketch constructors and key parameters
+      render: dart
+    validations:
+      required: true
