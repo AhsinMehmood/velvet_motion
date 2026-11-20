@@ -9,3 +9,7 @@ linter:
 analyzer:
   errors:
     public_member_api_docs: warning
+    # Flutter 3.50 deprecates in-SDK material/cupertino in favor of
+    # material_ui/cupertino_ui. Keep library imports working across 3.41–3.50
+    # until the package migrates in a follow-up release.
+    deprecated_member_use: ignore
