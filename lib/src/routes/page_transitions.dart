@@ -13,8 +13,9 @@ class VelvetMotion {
   /// theme: ThemeData(pageTransitionsTheme: VelvetMotion.pageTransitions),
   /// ```
   static const PageTransitionsTheme pageTransitions = PageTransitionsTheme(
-    // material_ui 1.x / Flutter 3.50: initializing formal is `_builders`.
-    _builders: <TargetPlatform, PageTransitionsBuilder>{
+    // `builders` is the public name for material_ui's `this._builders` formal.
+    // ignore: undefined_named_parameter
+    builders: <TargetPlatform, PageTransitionsBuilder>{
       TargetPlatform.android: VelvetPageTransitionsBuilder(),
       TargetPlatform.iOS: VelvetPageTransitionsBuilder(),
       TargetPlatform.macOS: VelvetPageTransitionsBuilder(),

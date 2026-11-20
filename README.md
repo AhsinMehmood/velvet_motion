@@ -20,7 +20,7 @@ Hand-crafted, physics-based motion for Flutter apps. Springs, gestures and premi
 
 ```yaml
 dependencies:
-  velvet_motion: ^1.1.0
+  velvet_motion: ^1.1.1
 ```
 
 ```dart

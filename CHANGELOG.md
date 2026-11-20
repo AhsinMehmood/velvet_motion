@@ -1,3 +1,7 @@
+## 1.1.1
+
+* Fix Flutter 3.50 / material_ui analysis errors in `RollingNumber` and `PageTransitionsTheme`
+
 ## 1.1.0
 
 * `AnimatedFormField` — floating label, focus glow, validation shake, success tick

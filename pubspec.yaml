@@ -1,7 +1,7 @@
 name: velvet_motion
 description: >-
   Hand-crafted, physics-based motion for Flutter apps. Interruptible springs, gesture velocity, and Apple-like defaults in one import—no animation files required.
-version: 1.1.0
+version: 1.1.1
 homepage: https://github.com/AhsinMehmood/velvet_motion
 repository: https://github.com/AhsinMehmood/velvet_motion
 issue_tracker: https://github.com/AhsinMehmood/velvet_motion/issues
