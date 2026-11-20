@@ -187,6 +187,11 @@ class _GalleryHome extends StatelessWidget {
             subtitle: 'Liquid selected pill',
             onTap: () => _open(context, _TabsDemoPage(spring: spring)),
           ),
+          _DemoTile(
+            title: 'Pull to refresh',
+            subtitle: 'Branded spring indicator',
+            onTap: () => _open(context, _RefreshDemoPage(spring: spring)),
+          ),
         ],
       ),
     );
@@ -571,6 +576,59 @@ class _TabsDemoPageState extends State<_TabsDemoPage> {
         stretch: 0.35,
         onChanged: (int i) => setState(() => _tab = i),
         items: _items,
+      ),
+    );
+  }
+}
+
+class _RefreshDemoPage extends StatefulWidget {
+  const _RefreshDemoPage({required this.spring});
+
+  final Spring spring;
+
+  @override
+  State<_RefreshDemoPage> createState() => _RefreshDemoPageState();
+}
+
+class _RefreshDemoPageState extends State<_RefreshDemoPage> {
+  int _count = 8;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Pull to refresh')),
+      body: SpringRefresh(
+        spring: widget.spring,
+        triggerDistance: 90,
+        onRefresh: () async {
+          await Future<void>.delayed(const Duration(milliseconds: 900));
+          if (!mounted) {
+            return;
+          }
+          setState(() => _count += 2);
+        },
+        indicator:
+            (BuildContext context, double progress, SpringRefreshState state) {
+              return SizedBox(
+                width: 36,
+                height: 36,
+                child: CircularProgressIndicator(
+                  value: state == SpringRefreshState.refreshing
+                      ? null
+                      : progress,
+                  strokeWidth: 3,
+                ),
+              );
+            },
+        child: ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
+          itemCount: _count,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(title: Text('Row ${index + 1}'));
+          },
+        ),
       ),
     );
   }

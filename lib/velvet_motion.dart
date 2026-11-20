@@ -20,5 +20,6 @@ export 'src/widgets/elastic_tab_bar.dart';
 export 'src/widgets/morph_button.dart';
 export 'src/widgets/press_scale.dart';
 export 'src/widgets/rolling_number.dart';
+export 'src/widgets/spring_refresh.dart';
 export 'src/widgets/staggered_list.dart';
 export 'src/widgets/velvet_sheet.dart';
