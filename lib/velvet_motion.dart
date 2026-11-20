@@ -9,4 +9,8 @@ library;
 
 export 'src/core/motion_value.dart';
 export 'src/core/spring.dart';
+export 'src/effects/effect.dart';
+export 'src/effects/motion_extension.dart';
+export 'src/effects/spring_builder.dart';
 export 'src/theme/motion_theme.dart';
+export 'src/widgets/press_scale.dart';
