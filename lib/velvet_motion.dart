@@ -16,6 +16,7 @@ export 'src/gestures/rubber_band.dart';
 export 'src/routes/page_transitions.dart';
 export 'src/routes/velvet_route.dart';
 export 'src/theme/motion_theme.dart';
+export 'src/widgets/elastic_tab_bar.dart';
 export 'src/widgets/morph_button.dart';
 export 'src/widgets/press_scale.dart';
 export 'src/widgets/rolling_number.dart';

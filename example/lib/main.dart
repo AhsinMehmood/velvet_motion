@@ -182,6 +182,11 @@ class _GalleryHome extends StatelessWidget {
             subtitle: 'Snaps, fling, rubber-band',
             onTap: () => _open(context, _SheetDemoPage(spring: spring)),
           ),
+          _DemoTile(
+            title: 'Elastic tab bar',
+            subtitle: 'Liquid selected pill',
+            onTap: () => _open(context, _TabsDemoPage(spring: spring)),
+          ),
         ],
       ),
     );
@@ -527,6 +532,45 @@ class _SheetDemoPageState extends State<_SheetDemoPage> {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+class _TabsDemoPage extends StatefulWidget {
+  const _TabsDemoPage({required this.spring});
+
+  final Spring spring;
+
+  @override
+  State<_TabsDemoPage> createState() => _TabsDemoPageState();
+}
+
+class _TabsDemoPageState extends State<_TabsDemoPage> {
+  int _tab = 0;
+
+  static const List<TabItem> _items = <TabItem>[
+    TabItem(icon: Icons.home_rounded, label: 'Home'),
+    TabItem(icon: Icons.receipt_long_rounded, label: 'Orders'),
+    TabItem(icon: Icons.person_rounded, label: 'Profile'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Elastic tab bar')),
+      body: Center(
+        child: Text(
+          _items[_tab].label,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+      ),
+      bottomNavigationBar: ElasticTabBar(
+        index: _tab,
+        spring: widget.spring,
+        stretch: 0.35,
+        onChanged: (int i) => setState(() => _tab = i),
+        items: _items,
       ),
     );
   }
