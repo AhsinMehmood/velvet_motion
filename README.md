@@ -1,39 +1,153 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Velvet Motion
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+Premium spring-physics motion for Flutter.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+[![pub package](https://img.shields.io/pub/v/velvet_motion.svg)](https://pub.dev/packages/velvet_motion)
+[![CI](https://github.com/AhsinMehmood/velvet_motion/actions/workflows/ci.yml/badge.svg)](https://github.com/AhsinMehmood/velvet_motion/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Hand-crafted, physics-based motion for Flutter apps. Springs, gestures and premium defaults in one line of code, with no animation files.
 
-## Features
+## Why Velvet Motion
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **Springs, not durations** — SwiftUI-style presets via `SpringDescription.withDurationAndBounce`
+- **Interruptible** — retarget mid-flight and keep velocity
+- **Gesture-aware** — follow the finger, then release into a spring
+- **Accessible** — honours reduce-motion; haptics can be turned off
+- **Zero dependencies** — Flutter SDK only, one import
 
-## Getting started
+## Install
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  velvet_motion: ^0.1.0
 ```
 
-## Additional information
+```dart
+import 'package:velvet_motion/velvet_motion.dart';
+```
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## Quick start
+
+```dart
+MaterialApp(
+  builder: (context, child) => MotionTheme(
+    data: const MotionThemeData(spring: Spring.smooth),
+    child: child!,
+  ),
+  theme: ThemeData(pageTransitionsTheme: VelvetMotion.pageTransitions),
+  home: const Home(),
+);
+```
+
+```dart
+Text('Welcome').motion.fadeUp();
+Image.asset('hero.png').motion.scaleIn(spring: Spring.bouncy);
+Card(child: child).motion.pressable(onTap: open);
+```
+
+## Animations
+
+### Spring route transition
+
+<!-- GIF: route transition -->
+
+```dart
+Navigator.of(context).push(
+  VelvetRoute(
+    builder: (_) => const Details(),
+    spring: Spring.smooth,
+    style: RouteStyle.push,
+  ),
+);
+```
+
+### Press scale + haptic
+
+<!-- GIF: press scale -->
+
+```dart
+PressScale(
+  onTap: () {},
+  scale: 0.96,
+  child: const MenuCard(),
+);
+```
+
+### Staggered list entrance
+
+<!-- GIF: staggered list -->
+
+```dart
+StaggeredList(
+  interval: const Duration(milliseconds: 40),
+  effect: Effect.fadeUp(distance: 12),
+  children: tiles,
+);
+```
+
+### Rolling number
+
+<!-- GIF: rolling number -->
+
+```dart
+RollingNumber(
+  value: total,
+  format: (v) => 'Rs ${v.round()}',
+  spring: Spring.snappy,
+);
+```
+
+### Morphing button
+
+<!-- GIF: morph button -->
+
+```dart
+final controller = MorphButtonController();
+MorphButton(
+  controller: controller,
+  idle: const Text('Place order'),
+  onPressed: () async {
+    controller.loading();
+    final ok = await placeOrder();
+    ok ? controller.success() : controller.error();
+  },
+);
+```
+
+## Theming and reduce motion
+
+```dart
+MotionTheme(
+  data: const MotionThemeData(
+    spring: Spring.smooth,
+    respectReduceMotion: true,
+    haptics: true,
+  ),
+  child: child,
+);
+```
+
+When `MediaQuery.disableAnimations` is true and the theme respects it, widgets jump or fade instead of springing.
+
+## Roadmap
+
+Each item will be tracked as a GitHub issue. See [open issues](https://github.com/AhsinMehmood/velvet_motion/issues).
+
+**v0.5**
+
+- Gesture-driven bottom sheet
+- Elastic tab bar
+- Custom pull-to-refresh
+- Shared-element hero morph
+- Parallax swipe deck
+
+Then physics helpers, more widgets, and a stable v1.0 API.
+
+## Contributing
+
+PRs and new animation proposals are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) and the animation proposal issue template.
+
+## License
+
+MIT © 2026 Ahsan Mehmood (MehmoodTech)

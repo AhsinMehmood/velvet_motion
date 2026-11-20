@@ -9,11 +9,7 @@ void main() {
         home: Scaffold(
           body: StaggeredList(
             shrinkWrap: true,
-            children: <Widget>[
-              Text('One'),
-              Text('Two'),
-              Text('Three'),
-            ],
+            children: <Widget>[Text('One'), Text('Two'), Text('Three')],
           ),
         ),
       ),
