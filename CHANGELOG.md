@@ -1,3 +1,8 @@
+## 0.1.1
+
+* Migrate Material and Cupertino imports to `material_ui` and `cupertino_ui` for Flutter 3.50+ static analysis
+* Raise SDK floor to Dart `^3.13.0` / Flutter `>=3.47.0`
+
 ## 0.1.0
 
 * Spring presets (`smooth`, `snappy`, `bouncy`, `interactive`) and interruptible `MotionValue`

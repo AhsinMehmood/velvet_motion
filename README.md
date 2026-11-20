@@ -14,7 +14,7 @@ Hand-crafted, physics-based motion for Flutter apps. Springs, gestures and premi
 - **Interruptible** — retarget mid-flight and keep velocity
 - **Gesture-aware** — follow the finger, then release into a spring
 - **Accessible** — honours reduce-motion; haptics can be turned off
-- **Zero dependencies** — Flutter SDK only, one import
+- **Tiny footprint** — Flutter SDK plus official `material_ui` / `cupertino_ui`, one import
 
 ## Install
 

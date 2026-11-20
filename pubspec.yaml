@@ -1,7 +1,7 @@
 name: velvet_motion
 description: >-
   Hand-crafted, physics-based motion for Flutter apps. Interruptible springs, gesture velocity, and Apple-like defaults in one import—no animation files required.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/AhsinMehmood/velvet_motion
 repository: https://github.com/AhsinMehmood/velvet_motion
 issue_tracker: https://github.com/AhsinMehmood/velvet_motion/issues
@@ -13,12 +13,14 @@ topics:
   - ui
 
 environment:
-  sdk: ^3.8.0
-  flutter: ">=3.32.0"
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
 
 dependencies:
+  cupertino_ui: ^1.1.7
   flutter:
     sdk: flutter
+  material_ui: ^1.11.1
 
 dev_dependencies:
   flutter_test:

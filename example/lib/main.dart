@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:velvet_motion/velvet_motion.dart';
 
 void main() {
@@ -124,18 +124,15 @@ class _GalleryHome extends StatelessWidget {
         children: <Widget>[
           Text(
             'Premium spring motion',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-              letterSpacing: -0.6,
-            ),
+            style: Theme.of(context).textTheme.headlineMedium
+                ?.copyWith(fontWeight: FontWeight.w600, letterSpacing: -0.6),
           ),
           const SizedBox(height: 8),
           Text(
             'Tune the shared spring, then open a demo.',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(
-                context,
-              ).colorScheme.onSurface.withValues(alpha: 0.6),
+              color: Theme.of(context).colorScheme.onSurface
+                  .withValues(alpha: 0.6),
             ),
           ),
           const SizedBox(height: 20),
@@ -186,9 +183,8 @@ class _GalleryHome extends StatelessWidget {
   }
 
   void _open(BuildContext context, Widget page) {
-    Navigator.of(
-      context,
-    ).push(VelvetRoute<void>(spring: spring, builder: (_) => page));
+    Navigator.of(context)
+        .push(VelvetRoute<void>(spring: spring, builder: (_) => page));
   }
 }
 
@@ -274,17 +270,15 @@ class _DemoTile extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       title,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium
+                          ?.copyWith(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       subtitle,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.55),
+                        color: Theme.of(context).colorScheme.onSurface
+                            .withValues(alpha: 0.55),
                       ),
                     ),
                   ],
@@ -399,10 +393,8 @@ class _RollingDemoPageState extends State<_RollingDemoPage> {
               value: _value,
               spring: widget.spring,
               format: (double v) => 'Rs ${v.round()}',
-              style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                fontWeight: FontWeight.w600,
-                letterSpacing: -1,
-              ),
+              style: Theme.of(context).textTheme.displaySmall
+                  ?.copyWith(fontWeight: FontWeight.w600, letterSpacing: -1),
             ),
             const SizedBox(height: 24),
             FilledButton(

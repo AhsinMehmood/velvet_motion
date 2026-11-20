@@ -44,8 +44,11 @@ class SpringBuilder extends StatefulWidget {
 }
 
 /// Signature for [SpringBuilder.builder].
-typedef TransitionBuilderWithValue =
-    Widget Function(BuildContext context, double t, Widget? child);
+typedef TransitionBuilderWithValue = Widget Function(
+  BuildContext context,
+  double t,
+  Widget? child,
+);
 
 class _SpringBuilderState extends State<SpringBuilder>
     with SingleTickerProviderStateMixin {
