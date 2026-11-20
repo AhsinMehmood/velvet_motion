@@ -20,7 +20,7 @@ Hand-crafted, physics-based motion for Flutter apps. Springs, gestures and premi
 
 ```yaml
 dependencies:
-  velvet_motion: ^1.0.0
+  velvet_motion: ^1.1.0
 ```
 
 ```dart
@@ -216,6 +216,44 @@ tracker.add(time: elapsed, position: dx);
 motion.fling(velocity: tracker.velocity);
 ```
 
+### Animated form field
+
+```dart
+final field = GlobalKey<AnimatedFormFieldState>();
+AnimatedFormField(key: field, label: 'Email');
+field.currentState?.shake();
+field.currentState?.succeed();
+```
+
+### Scroll parallax
+
+```dart
+ScrollParallax(
+  factor: 0.4,
+  child: Image.asset('hero.jpg', fit: BoxFit.cover),
+);
+```
+
+### Shared-axis route
+
+```dart
+Navigator.of(context).push(
+  VelvetRoute(
+    style: RouteStyle.sharedAxisX,
+    builder: (_) => const Details(),
+  ),
+);
+```
+
+### Choreography
+
+```dart
+Choreography(
+  mode: ChoreoMode.stagger,
+  children: [Logo(), Title(), Cta()],
+);
+```
+
 ## Theming and reduce motion
 
 ```dart
@@ -235,9 +273,9 @@ When `MediaQuery.disableAnimations` is true and the theme respects it, widgets j
 
 Each item will be tracked as a GitHub issue. See [open issues](https://github.com/AhsinMehmood/velvet_motion/issues).
 
-**v1.0 (stable)** — API freeze, physics helpers, skeleton, expandable card, morph icon, island toast, spring text.
+**v1.1** — animated forms, scroll parallax, shared-axis / fade-through routes, choreography.
 
-**Next (1.x)** — animated forms, scroll-linked parallax, shared-axis transitions, choreography.
+**Next (1.x)** — more text effects (blur-in, scramble), then v2 carousels / glass / charts.
 
 ## Contributing
 

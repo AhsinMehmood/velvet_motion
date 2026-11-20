@@ -227,6 +227,34 @@ class _GalleryHome extends StatelessWidget {
             subtitle: 'Per-character reveal',
             onTap: () => _open(context, _SpringTextDemoPage(spring: spring)),
           ),
+          _DemoTile(
+            title: 'Animated form',
+            subtitle: 'Float label, shake, success',
+            onTap: () => _open(context, _FormDemoPage(spring: spring)),
+          ),
+          _DemoTile(
+            title: 'Scroll parallax',
+            subtitle: 'Scroll-linked layers',
+            onTap: () => _open(context, const _ParallaxDemoPage()),
+          ),
+          _DemoTile(
+            title: 'Shared-axis route',
+            subtitle: 'Material patterns on springs',
+            onTap: () {
+              Navigator.of(context).push(
+                VelvetRoute<void>(
+                  spring: spring,
+                  style: RouteStyle.sharedAxisX,
+                  builder: (_) => const _SharedAxisDemoPage(),
+                ),
+              );
+            },
+          ),
+          _DemoTile(
+            title: 'Choreography',
+            subtitle: 'Staggered entrance timeline',
+            onTap: () => _open(context, _ChoreoDemoPage(spring: spring)),
+          ),
         ],
       ),
     );
@@ -968,6 +996,161 @@ class _SpringTextDemoPageState extends State<_SpringTextDemoPage> {
               child: const Text('Replay'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FormDemoPage extends StatefulWidget {
+  const _FormDemoPage({required this.spring});
+
+  final Spring spring;
+
+  @override
+  State<_FormDemoPage> createState() => _FormDemoPageState();
+}
+
+class _FormDemoPageState extends State<_FormDemoPage> {
+  final GlobalKey<AnimatedFormFieldState> _email =
+      GlobalKey<AnimatedFormFieldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Animated form')),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: <Widget>[
+            AnimatedFormField(
+              key: _email,
+              label: 'Email',
+              spring: widget.spring,
+              keyboardType: TextInputType.emailAddress,
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => _email.currentState?.shake(),
+                    child: const Text('Shake'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () => _email.currentState?.succeed(),
+                    child: const Text('Succeed'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ParallaxDemoPage extends StatelessWidget {
+  const _ParallaxDemoPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Scroll parallax')),
+      body: ListView.builder(
+        itemCount: 20,
+        itemBuilder: (BuildContext context, int index) {
+          if (index == 0) {
+            return SizedBox(
+              height: 220,
+              child: ClipRect(
+                child: ScrollParallax(
+                  factor: 0.45,
+                  child: ColoredBox(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: const Center(
+                      child: Text('Parallax header', textAlign: TextAlign.center),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+          return ListTile(title: Text('Row $index'));
+        },
+      ),
+    );
+  }
+}
+
+class _SharedAxisDemoPage extends StatelessWidget {
+  const _SharedAxisDemoPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Shared axis')),
+      body: const Center(
+        child: Text('Arrived via RouteStyle.sharedAxisX'),
+      ),
+    );
+  }
+}
+
+class _ChoreoDemoPage extends StatefulWidget {
+  const _ChoreoDemoPage({required this.spring});
+
+  final Spring spring;
+
+  @override
+  State<_ChoreoDemoPage> createState() => _ChoreoDemoPageState();
+}
+
+class _ChoreoDemoPageState extends State<_ChoreoDemoPage> {
+  int _nonce = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Choreography')),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: <Widget>[
+            Choreography(
+              key: ValueKey<int>(_nonce),
+              mode: ChoreoMode.stagger,
+              spring: widget.spring,
+              children: <Widget>[
+                _choreoCard(context, 'Welcome'),
+                _choreoCard(context, 'Pick a dish'),
+                _choreoCard(context, 'Checkout'),
+              ],
+            ),
+            const SizedBox(height: 24),
+            FilledButton(
+              onPressed: () => setState(() => _nonce++),
+              child: const Text('Replay'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _choreoCard(BuildContext context, String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Material(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(14),
+        child: SizedBox(
+          height: 64,
+          child: Center(child: Text(title)),
         ),
       ),
     );

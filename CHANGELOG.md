@@ -1,3 +1,10 @@
+## 1.1.0
+
+* `AnimatedFormField` — floating label, focus glow, validation shake, success tick
+* `ScrollParallax` / `ScrollMotionBuilder` / `parallaxOffset` — scroll-linked motion
+* `RouteStyle.sharedAxisX` / `Y` / `Z` and `fadeThrough` — Material patterns on springs
+* `Choreography` + `MotionTimeline` — parallel, sequence, and stagger entrances
+
 ## 1.0.0
 
 Stable API freeze for the 1.x line.

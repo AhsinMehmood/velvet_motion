@@ -13,6 +13,18 @@ enum RouteStyle {
 
   /// Cross-fade between pages.
   fade,
+
+  /// Material shared-axis along X (horizontal).
+  sharedAxisX,
+
+  /// Material shared-axis along Y (vertical).
+  sharedAxisY,
+
+  /// Material shared-axis along Z (scale + fade).
+  sharedAxisZ,
+
+  /// Material fade-through (outgoing fades out, incoming fades in).
+  fadeThrough,
 }
 
 /// A [PageRoute] that transitions with Velvet springs.
@@ -99,6 +111,28 @@ Widget buildVelvetTransitions({
       return _ModalTransition(primary: primary, child: child);
     case RouteStyle.fade:
       return FadeTransition(opacity: primary, child: child);
+    case RouteStyle.sharedAxisX:
+      return _SharedAxisTransition(
+        primary: primary,
+        secondary: secondary,
+        axis: Axis.horizontal,
+        child: child,
+      );
+    case RouteStyle.sharedAxisY:
+      return _SharedAxisTransition(
+        primary: primary,
+        secondary: secondary,
+        axis: Axis.vertical,
+        child: child,
+      );
+    case RouteStyle.sharedAxisZ:
+      return _SharedAxisZTransition(
+        primary: primary,
+        secondary: secondary,
+        child: child,
+      );
+    case RouteStyle.fadeThrough:
+      return _FadeThroughTransition(primary: primary, child: child);
   }
 }
 
@@ -205,6 +239,106 @@ class _ModalTransition extends StatelessWidget {
             opacity: Tween<double>(begin: 0, end: 1).animate(primary),
             child: child,
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SharedAxisTransition extends StatelessWidget {
+  const _SharedAxisTransition({
+    required this.primary,
+    required this.secondary,
+    required this.child,
+    required this.axis,
+  });
+
+  final Animation<double> primary;
+  final Animation<double> secondary;
+  final Widget child;
+  final Axis axis;
+
+  @override
+  Widget build(BuildContext context) {
+    final Offset begin = axis == Axis.horizontal
+        ? const Offset(0.08, 0)
+        : const Offset(0, 0.08);
+    final Offset exit = axis == Axis.horizontal
+        ? const Offset(-0.04, 0)
+        : const Offset(0, -0.04);
+
+    return SlideTransition(
+      position: Tween<Offset>(begin: begin, end: Offset.zero).animate(primary),
+      child: FadeTransition(
+        opacity: Tween<double>(begin: 0, end: 1).animate(primary),
+        child: SlideTransition(
+          position: Tween<Offset>(begin: Offset.zero, end: exit).animate(secondary),
+          child: FadeTransition(
+            opacity: Tween<double>(begin: 1, end: 0.85).animate(secondary),
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SharedAxisZTransition extends StatelessWidget {
+  const _SharedAxisZTransition({
+    required this.primary,
+    required this.secondary,
+    required this.child,
+  });
+
+  final Animation<double> primary;
+  final Animation<double> secondary;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: Tween<double>(begin: 0.92, end: 1).animate(primary),
+      child: FadeTransition(
+        opacity: Tween<double>(begin: 0, end: 1).animate(primary),
+        child: ScaleTransition(
+          scale: Tween<double>(begin: 1, end: 1.04).animate(secondary),
+          child: FadeTransition(
+            opacity: Tween<double>(begin: 1, end: 0.6).animate(secondary),
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FadeThroughTransition extends StatelessWidget {
+  const _FadeThroughTransition({
+    required this.primary,
+    required this.child,
+  });
+
+  final Animation<double> primary;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> fadeOut = CurvedAnimation(
+      parent: primary,
+      curve: const Interval(0, 0.35, curve: Curves.easeIn),
+    );
+    final Animation<double> fadeIn = CurvedAnimation(
+      parent: primary,
+      curve: const Interval(0.35, 1, curve: Curves.easeOut),
+    );
+
+    return FadeTransition(
+      opacity: Tween<double>(begin: 0, end: 1).animate(fadeIn),
+      child: FadeTransition(
+        opacity: Tween<double>(begin: 1, end: 1).animate(fadeOut),
+        child: ScaleTransition(
+          scale: Tween<double>(begin: 0.96, end: 1).animate(fadeIn),
+          child: child,
         ),
       ),
     );
