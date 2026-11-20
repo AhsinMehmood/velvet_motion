@@ -101,8 +101,9 @@ class _RollingGlyph extends StatelessWidget {
         final double height = (style.fontSize ?? 14) * (style.height ?? 1.2);
         final TextPainter painter = TextPainter(
           text: TextSpan(text: '0', style: style),
-          textDirection: TextDirection.ltr,
-        )..layout();
+        )
+          ..textDirection = TextDirection.ltr
+          ..layout();
         return SizedBox(
           width: painter.width,
           height: height,
