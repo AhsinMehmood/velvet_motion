@@ -9,3 +9,4 @@ library;
 
 export 'src/core/motion_value.dart';
 export 'src/core/spring.dart';
+export 'src/theme/motion_theme.dart';
